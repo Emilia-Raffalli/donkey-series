@@ -1,0 +1,42 @@
+@import "~bootstrap/scss/bootstrap";
+
+$primary-color: #ff0000;
+$secondary-color: #000038;
+$nav-bg: black;
+$third-color: #ffffff;
+$font-family: 'Urbanist', sans-serif;
+$global-padding: 10px;
+
+body {
+  background-color: #000038;
+  font-family: $font-family;
+  box-sizing: border-box;
+  color: $third-color;
+}
+
+.navbar {
+  background-color: black !important;
+}
+
+.nav-link {
+  color: $third-color !important;
+}
+
+.navbar-nav .nav-link:hover {
+  opacity: 0.5;
+  color: $third-color !important;
+}
+
+.navbar-nav .nav-link.active {
+  font-weight: bold !important;
+  color: $third-color !important;
+}
+
+a.navbar-brand {
+  color: $primary-color !important;
+  font-size: 1.6em !important;
+}
+
+.navbar-nav .nav-link.disabled {
+  color: rgba(255, 255, 255, 0.5) !important;
+}
