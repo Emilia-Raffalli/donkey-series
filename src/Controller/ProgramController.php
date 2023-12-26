@@ -18,4 +18,16 @@ class ProgramController extends AbstractController
     //     return new Response (
     //         '<!doctype html><html lang="en"><title>Donkey Series</title><body>Donkey Series Index</body></html>'        );
     // }
+
+    //On peut écrire les requirements drectement dans les paramètres de route comme ceci:
+    // #[Route('/program/{id}', name: 'app_program_show', methods: ['GET'], requirements: ['id' => '\d+'])]
+
+    #[Route('/program/{id<^\d+$>}', name: 'app_program_show', methods:['GET'])]
+    public function show(int $id): Response
+    {
+        return $this->render('/program/show.html.twig', [
+            'id' => $id        
+        ]);
+    
+    }
 }
