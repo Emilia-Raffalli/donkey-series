@@ -7,11 +7,25 @@ $third-color: #ffffff;
 $font-family: 'Urbanist', sans-serif;
 $global-padding: 10px;
 
+// GLOBAL SETTINGS
+
 body {
   background-color: #000038;
   font-family: $font-family;
   box-sizing: border-box;
   color: $third-color;
+}
+
+h1 {
+  font-size:3.6em;
+  font-weight:700;
+}
+
+.btn {
+  min-width: 150px;
+  background-color:$primary-color;
+  border:none;
+
 }
 
 .navbar {
@@ -39,4 +53,62 @@ a.navbar-brand {
 
 .navbar-nav .nav-link.disabled {
   color: rgba(255, 255, 255, 0.5) !important;
+}
+
+// POSITION
+
+.flex {
+  display:flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.align-end {
+  align-items: self-end;
+}
+
+.bg-red {
+  background-color: #ff0000;
+}
+
+
+// CARDS 
+
+.card-title {
+  font-weight:800;
+}
+
+.head {
+  position:relative;
+  width:100%;
+}
+// .card-img {
+//   height:50vh;
+// }
+
+.latestProgram {
+  position: absolute; 
+  top: 50%; 
+  left: 50%; 
+  transform: translate(-50%, -50%); 
+  color: white; 
+  text-align: left;
 }

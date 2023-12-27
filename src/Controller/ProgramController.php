@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Program;
+use App\Repository\ProgramRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -9,25 +12,33 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProgramController extends AbstractController
 {
     #[Route('/program', name: 'app_program')]
-    public function index(): Response
+    public function index(ProgramRepository $programRepository, EntityManagerInterface $em): Response
     {
+        $programs = $programRepository->findAll();
+
+        $latestProgram = $em->getRepository(Program::class)
+        ->findOneBy([], ['createdAt' => 'DESC']);
+
         return $this->render('program/index.html.twig', [
-            'website' => 'Donkey Series',
+            'programs' => $programs,
+            'latestProgram' => $latestProgram
         ]);
     }
-    //     return new Response (
-    //         '<!doctype html><html lang="en"><title>Donkey Series</title><body>Donkey Series Index</body></html>'        );
-    // }
-
-    //On peut écrire les requirements drectement dans les paramètres de route comme ceci:
-    // #[Route('/program/{id}', name: 'app_program_show', methods: ['GET'], requirements: ['id' => '\d+'])]
 
     #[Route('/program/{id<^\d+$>}', name: 'app_program_show', methods:['GET'])]
-    public function show(int $id): Response
+    public function show(int $id, ProgramRepository $programRepository): Response
     {
+        $program = $programRepository->find($id);
+       
+
+        if (!$program) {
+            throw $this->createNotFoundException("Aucun programme trouvé avec l'id $id");
+        }
+
         return $this->render('/program/show.html.twig', [
-            'id' => $id        
+            'program' => $program,
+            'id' =>$id,
         ]);
-    
     }
+    
 }
