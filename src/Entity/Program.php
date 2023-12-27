@@ -22,11 +22,11 @@ class Program
     #[ORM\Column(type: Types::TEXT)]
     private ?string $synopsis = null;
 
-    #[ORM\Column(length: 80)]
-    private ?string $country = null;
+    // #[ORM\Column(length: 80)]
+    // private ?string $country = null;
 
-    #[ORM\Column]
-    private ?int $year = null;
+    // #[ORM\Column]
+    // private ?int $year = null;
 
     #[ORM\ManyToOne(inversedBy: 'programs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -37,6 +37,9 @@ class Program
 
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class, orphanRemoval: true)]
     private Collection $seasons;
+
+    #[ORM\Column(type: Types::BLOB)]
+    private $poster = null;
 
     public function __construct()
     {
@@ -73,29 +76,29 @@ class Program
         return $this;
     }
 
-    public function getCountry(): ?string
-    {
-        return $this->country;
-    }
+    // public function getCountry(): ?string
+    // {
+    //     return $this->country;
+    // }
 
-    public function setCountry(string $country): static
-    {
-        $this->country = $country;
+    // public function setCountry(string $country): static
+    // {
+    //     $this->country = $country;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
+    // public function getYear(): ?int
+    // {
+    //     return $this->year;
+    // }
 
-    public function setYear(int $year): static
-    {
-        $this->year = $year;
+    // public function setYear(int $year): static
+    // {
+    //     $this->year = $year;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     public function getCategory(): ?Category
     {
@@ -162,6 +165,18 @@ class Program
                 $season->setProgram(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPoster()
+    {
+        return $this->poster;
+    }
+
+    public function setPoster($poster): static
+    {
+        $this->poster = $poster;
 
         return $this;
     }
