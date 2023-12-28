@@ -48,9 +48,9 @@ class ProgramFixture extends Fixture
 
             $manager->persist($program);
 
-            $manager->flush();
-
         }
+
+        $manager->flush();
 
     }
 

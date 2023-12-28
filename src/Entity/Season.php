@@ -26,9 +26,6 @@ class Season
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column]
-    private ?int $year = null;
-
     #[ORM\OneToMany(mappedBy: 'season', targetEntity: Episode::class, orphanRemoval: true)]
     private Collection $episodes;
 
@@ -74,18 +71,6 @@ class Season
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getYear(): ?int
-    {
-        return $this->year;
-    }
-
-    public function setYear(int $year): static
-    {
-        $this->year = $year;
 
         return $this;
     }

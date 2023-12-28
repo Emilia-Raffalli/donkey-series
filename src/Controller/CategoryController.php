@@ -22,16 +22,16 @@ class CategoryController extends AbstractController
 
 
     #[Route('/category/{categoryName}', name: 'app_category_show', methods: ['GET'])]
-    public function show(string $categoryName, CategoryRepository $categoryRepository, EntityManagerInterface $entityManager): Response
+    public function show(string $categoryName, CategoryRepository $categoryRepository, EntityManagerInterface $em): Response
     {
         $category = $categoryRepository->findOneBy(['name' => $categoryName]);
 
         if (!$category) {
             throw $this->createNotFoundException("Aucune catégorie trouvée avec le nom = $categoryName");
+            
         }
 
-        $programs = $entityManager
-            ->getRepository(Program::class)
+        $programs = $em->getRepository(Program::class)
             ->findBy(['category' => $category], ['id' => 'DESC'], 3);
 
         return $this->render('category/show.html.twig', [

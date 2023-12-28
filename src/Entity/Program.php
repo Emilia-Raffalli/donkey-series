@@ -35,9 +35,6 @@ class Program
     #[ORM\JoinColumn(nullable: false)]
     private ?Category $category = null;
 
-    #[ORM\ManyToMany(targetEntity: ProgramActor::class, mappedBy: 'program')]
-    private Collection $programActors;
-
     #[ORM\OneToMany(mappedBy: 'program', targetEntity: Season::class, orphanRemoval: true)]
     private Collection $seasons;
 
@@ -49,7 +46,6 @@ class Program
 
     public function __construct()
     {
-        $this->programActors = new ArrayCollection();
         $this->seasons = new ArrayCollection();
     }
 
@@ -118,32 +114,6 @@ class Program
         return $this;
     }
 
-    /**
-     * @return Collection<int, ProgramActor>
-     */
-    public function getProgramActors(): Collection
-    {
-        return $this->programActors;
-    }
-
-    public function addProgramActor(ProgramActor $programActor): static
-    {
-        if (!$this->programActors->contains($programActor)) {
-            $this->programActors->add($programActor);
-            $programActor->addProgram($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProgramActor(ProgramActor $programActor): static
-    {
-        if ($this->programActors->removeElement($programActor)) {
-            $programActor->removeProgram($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Season>

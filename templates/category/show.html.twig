@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CategoryController!{% endblock %}
+
+{% block body %}
+
+
+<div class="example-wrapper">
+    <h2>Affichage des séries par catégorie séléctionnée</h2>
+
+   
+    <ul>
+        <li> {{ category.name }} </li>
+    </ul>
+
+    {% if programs is empty %}
+        <p>Aucune série trouvée dans la catégorie </p>
+    {% endif %}
+
+    <div class='container flex flex-wrap'>
+    {% for program in programs %}
+        <div class="card m-3" style="width: 18rem;">
+            <img class="card-img-top" src="{{ program.poster }}" alt="{{ program.title }} poster" style="object-fit: cover; width: 100%; height: 200px;">
+            <div class="card-body">
+                <h2 class="card-title">{{ program.title }}</h2>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="{{ path('app_program_show', {'id': program.id}) }}" class="btn btn-primary">Découvrir</a>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+
+
+</div>
+{% endblock %}
