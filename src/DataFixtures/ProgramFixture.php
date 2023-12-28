@@ -17,7 +17,7 @@ class ProgramFixture extends Fixture
                 'title' => 'Walking Dead',
                 'synopsis' => 'Le policier Rick Grimes se réveille après un long coma. Il découvre avec effarement que le monde, ravagé par une épidémie, est envahi par les morts-vivants.',
                 'poster' => 'https://m.media-amazon.com/images/M/MV5BZmFlMTA0MmUtNWVmOC00ZmE1LWFmMDYtZTJhYjJhNGVjYTU5XkEyXkFqcGdeQXVyMTAzMDM4MjM0._V1_.jpg',
-                'category_id' => CategoryFixture::CAT_HORROR,
+                'category_id' => CategoryFixture::CAT_ACTION,
             ],
             [
                 'title' => 'The Haunting Of Hill House',

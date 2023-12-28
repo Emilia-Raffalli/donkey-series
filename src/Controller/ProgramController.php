@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Program;
 use App\Repository\ProgramRepository;
+use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +27,10 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/program/{id<^\d+$>}', name: 'app_program_show', methods:['GET'])]
-    public function show(int $id, ProgramRepository $programRepository): Response
+    public function show(int $id, ProgramRepository $programRepository, SeasonRepository $seasonRepository): Response
     {
         $program = $programRepository->find($id);
+        $seasons = $seasonRepository->findby(['program'=>$program]);
        
 
         if (!$program) {
@@ -38,7 +40,29 @@ class ProgramController extends AbstractController
         return $this->render('/program/show.html.twig', [
             'program' => $program,
             'id' =>$id,
+            'seasons' =>$seasons
+        ]);
+    }
+
+    #[Route('/program/{id<^\d+$>}/seasons', name: 'app_seasons_show', methods:['GET'])]
+    public function showSeasons(int $programId, int $seasonId, ProgramRepository $programRepository, SeasonRepository $seasonRepository): Response
+    {
+        $program = $programRepository->find($programId);
+        $season = $seasonRepository->find($seasonId);
+       
+
+        if (!$season) {
+            throw $this->createNotFoundException("Aucun programme trouvé avec l'id $seasonId");
+        }
+
+        return $this->render('/program/show.html.twig', [
+            'program' => $program,
+            'programId' =>$programId,
+            'seasonId' => $seasonId
         ]);
     }
     
 }
+
+
+// AFFICHAGE DES SAISONS EN COURS !!!!!!!!!!!
