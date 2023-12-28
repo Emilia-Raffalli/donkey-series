@@ -8,8 +8,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\PrePersist;
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
+#[ORM\HasLifecycleCallbacks] // Pour indiquer à Doctrine que je vais utiliser des méthodes de rappel de cycle de vie de l'entité, telles que PrePersist, PreUpdate, etc.
 class Program
 {
     #[ORM\Id]
@@ -195,6 +197,12 @@ class Program
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist] //Méthode appelée automatiquement avant que l'entité ne soit persistée 
+    public function setCreatedAtValue():void
+    {
+        $this->createdAt = new \DateTimeImmutable();
     }
 
    
