@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Program;
+use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,11 +14,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProgramController extends AbstractController
 {
     #[Route('/program', name: 'app_program')]
-    public function index(ProgramRepository $programRepository, EntityManagerInterface $em): Response
+    public function index(ProgramRepository $programRepository): Response
     {
         $programs = $programRepository->findAll();
 
-        $latestProgram = $em->getRepository(Program::class)
+        $latestProgram = $programRepository
         ->findOneBy([], ['createdAt' => 'DESC']);
 
         return $this->render('program/index.html.twig', [
@@ -39,26 +40,30 @@ class ProgramController extends AbstractController
 
         return $this->render('/program/show.html.twig', [
             'program' => $program,
-            'id' =>$id,
-            'seasons' =>$seasons
+            'id' => $id,
+            'seasons' => $seasons
         ]);
     }
 
-    #[Route('/program/{id<^\d+$>}/seasons', name: 'app_seasons_show', methods:['GET'])]
-    public function showSeasons(int $programId, int $seasonId, ProgramRepository $programRepository, SeasonRepository $seasonRepository): Response
+    #[Route('/program/{programId<^\d+$>}/season/{seasonId<^\d+$>}', name: 'app_season_show', methods:['GET'])]
+    public function showSeasons(int $programId, int $seasonId, ProgramRepository $programRepository, SeasonRepository $seasonRepository, EpisodeRepository $episodeRepository): Response
     {
         $program = $programRepository->find($programId);
         $season = $seasonRepository->find($seasonId);
+        $seasons = $seasonRepository->findby(['program'=>$program]);
+        $episodes = $episodeRepository->findby(['season' => $season]);
        
 
         if (!$season) {
             throw $this->createNotFoundException("Aucun programme trouvé avec l'id $seasonId");
         }
 
-        return $this->render('/program/show.html.twig', [
+        return $this->render('/program/season_show.html.twig', [
             'program' => $program,
-            'programId' =>$programId,
-            'seasonId' => $seasonId
+            'season' => $season,
+            'seasons' => $seasons,
+            'episodes' => $episodes
+            
         ]);
     }
     

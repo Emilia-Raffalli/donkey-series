@@ -23,7 +23,7 @@ class EpisodeFixture extends Fixture implements DependentFixtureInterface
         foreach ($seasons as $season) {
             for ($i=1 ; $i<=12 ; $i++) {
                 $episode = new Episode();
-                $episode->setTitle('Episode' . $i);
+                $episode->setTitle('Episode ' . $i);
                 $episode->setNumber($i);
                 $episode->setSynopsis('Synopsis de l\'épisode ' . $i . ' de ' . $season->getProgram()->getTitle());
                 $episode->setSeason($season);

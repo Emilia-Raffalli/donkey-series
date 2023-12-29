@@ -9,6 +9,10 @@ $global-padding: 10px;
 
 // GLOBAL SETTINGS
 
+* {
+  list-style-type: none;
+}
+
 body {
   background-color: #000038;
   font-family: $font-family;
@@ -111,4 +115,8 @@ a.navbar-brand {
   transform: translate(-50%, -50%); 
   color: white; 
   text-align: left;
+}
+
+li {
+  padding:$global-padding;
 }

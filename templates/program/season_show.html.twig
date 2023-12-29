@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Programme {{ program.id }} {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <h2> {{ season.description }} </h2>
+        <p> La saison {{ season.number }} de {{ program.title }} est constituée de {{ episodes|length }} épisodes.</p>
+        <h3>Liste des épisodes</h3>
+        <ul>
+            {% for episode in episodes %}
+                <li> {{ episode.title }} : {{ episode.synopsis}}  </li>
+            {% endfor %}
+        </ul>
+
+        <div class="sub">
+            <h2> Toutes les saisons </h2>
+            {% for season in seasons %}
+                    <a href="{{ path('app_season_show', {'programId': program.id, 'seasonId': season.id}) }}">Saison {{ season.number }}</a> |
+            {% endfor %}  
+
+        </div>
+
+       
+
+
+        
+        <div class="container m-3">
+            <a href="{{ path('app_program') }}">
+                Retour à la liste des programmes
+            </a>
+        </div>
+
+    </div>
+
+    
+
+{% endblock %}
