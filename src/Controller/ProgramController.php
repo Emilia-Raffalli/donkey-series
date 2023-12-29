@@ -3,11 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Program;
+use App\Form\ProgramType;
+use App\Repository\CategoryRepository;
 use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -67,7 +70,49 @@ class ProgramController extends AbstractController
         ]);
     }
     
+
+    #[Route('/program/new', name: 'app_program_new')]
+    public function new(Request $request, EntityManagerInterface $em): Response
+    {
+        $program = new Program(); //Je créé un nouvel objet Programme
+        $form = $this->createForm (ProgramType::class, $program); // ProgramController créé un nouveau formulaire qui se réfère à l'entité Programme
+        $form->handleRequest($request); // Le formulaire récupère les données avec la requête http
+
+        if ($form->isSubmitted()&& $form->isValid()) {
+
+            // si le formulaire est soumis et validé, l'entity manager persite les données et les flush (intègre dans la bdd)
+
+            $em->persist($form->getData());
+            $em->flush();
+            //puis ProgrammController renvoie une redirection vers la page programmes
+            return $this->redirectToRoute('app_program');
+        }
+        // rend le formulaire sur la vue '/program/program_new.html.twig'
+        return $this->render('/program/program_new.html.twig', [
+            'form' => $form
+        ]);
+        
+    }
+
+
+//     #[Route('/program/edit', name: 'app_program_edit')]
+//     public function edit(Request $request, EntityManagerInterface $em, ProgramRepository $programRepository): Response
+//     {
+//         $form = $this->createForm (ProgramType::class, $program); // ProgramController créé un nouveau formulaire qui se réfère à l'entité Programme
+//         $form->handleRequest($request); // Le formulaire récupère les données avec la requête http
+
+//         if ($form->isSubmitted()&& $form->isValid()) {
+
+//             // si le formulaire est soumis et validé, l'entity manager flush (update dans la bdd)
+//             $em->flush();
+//             //puis ProgrammController renvoie une redirection vers la page programmes
+//             return $this->redirectToRoute('app_program');
+//         }
+//         // rend le formulaire sur la vue '/program/program_new.html.twig'
+//         return $this->render('/program/program_new.html.twig', [
+//             'form' => $form
+//         ]);
+// }
+
+
 }
-
-
-// AFFICHAGE DES SAISONS EN COURS !!!!!!!!!!!

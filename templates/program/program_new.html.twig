@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Nouveau programme {% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <div class="col-6">
+            <h2> Enregistrer un nouveau programme </h2>
+
+            {{ form(form) }}
+        </div>
+    </div>
+
+    <div class="container">
+    <a href="{{ path('app_program') }}">
+        Retour à la liste des programmes
+    </a>
+    </div>
+
+{% endblock %}

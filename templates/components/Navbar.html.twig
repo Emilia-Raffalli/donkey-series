@@ -39,12 +39,26 @@
                     <li class="nav-item">
                         <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                     </li>
-                </ul>
 
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                    <li>
+                        <form class="d-flex" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </form>
+                    </li>
+                </ul>
+                <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Mon compte admin
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a  href="{{ path('app_program_new') }}">Nouveau programme</a></li>
+                            <li><a  href="{{ path('app_category_new') }}">Nouvelle catégorie</a></li>
+                            <li><a href="{{ path('app_category') }}"> Liste des catégories </a></li>
+                            <li><a  href="#">Supprimer un programme</a></li>
+                        </ul>
+                </li>
+                {# <a href =""> Mon compte admin </a> #}
             </div>
         </div>
     </nav>

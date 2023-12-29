@@ -5,14 +5,35 @@
 {% block body %}
 
 
-<div class="example-wrapper">
+<div class="container">
     <h2>Affichage des catégories</h2>
 
-    {% for category in categories %}
-    <ul>
+   
+    {# <ul>
         <li> <a href ="{{ path('app_category_show', {'categoryName': category.name}) }}"> {{ category.name }} </a></li>
-    </ul>
-    {% endfor %}
+    </ul> #}
+
+
+    <table class="table-category table table-striped">
+        <thead>
+            <tr>
+            <th scope="col" colspan="4"> Toutes les catégories </th>
+            </tr>
+        </thead>
+        <tbody>
+         {% for category in categories %}
+            <tr>
+                <th scope="row"><a href ="{{ path('app_category_show', {'categoryName': category.name}) }}">{{ category.name }}</a></th>
+                <td><a href ="{{ path('app_category_edit', {'id': category.id}) }}"> Modifier </a></td>
+                <td><a href ="{{ path('app_category_delete', {'id': category.id}) }}"> Supprimer </a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
+
+  
 </div>
 {% endblock %}
 
