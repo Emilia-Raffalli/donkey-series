@@ -9,6 +9,7 @@ use App\Repository\EpisodeRepository;
 use App\Repository\ProgramRepository;
 use App\Repository\SeasonRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,12 +18,17 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProgramController extends AbstractController
 {
     #[Route('/program', name: 'app_program')]
-    public function index(ProgramRepository $programRepository): Response
+    public function index(ProgramRepository $programRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $programs = $programRepository->findAll();
+        $programs = $paginator->paginate(
+            $programRepository->createQueryBuilder('p'),
+            $request->query->getInt('page', 1),
+            4
+        );
 
-        $latestProgram = $programRepository
-        ->findOneBy([], ['createdAt' => 'DESC']);
+        $latestProgram = $programRepository->findOneBy([], ['createdAt' => 'DESC']);
+
+
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
