@@ -23,7 +23,7 @@ class ProgramController extends AbstractController
         $programs = $paginator->paginate(
             $programRepository->createQueryBuilder('p'),
             $request->query->getInt('page', 1),
-            4
+            2
         );
 
         $latestProgram = $programRepository->findOneBy([], ['createdAt' => 'DESC']);

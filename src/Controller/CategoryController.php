@@ -11,15 +11,30 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Form\CategorySearchType;
+use Knp\Component\Pager\PaginatorInterface;
 
 class CategoryController extends AbstractController
 {
     #[Route('/category', name: 'app_category')]
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        $categories = $categoryRepository->findAll();
+        $form = $this->createForm(CategorySearchType::class);
+        $form->handleRequest($request);
+
+        $query = $categoryRepository->getListQuery($form->get('query')->getData());
+
+        $categories = $paginator->paginate($query,$request->query->getInt('page', 1),
+        4
+    );
+
+        // dd($form->get('query')->getData()); pour visualiser la requête et stopper le script (dump die)
+        // $categories = $categoryRepository->findAll();
+        
         return $this->render('category/index.html.twig', [
             'categories' => $categories,
+            'form' => $form->createView(),
+            // 'findedCategories' =>$findedCategories
         ]);
     }
 
