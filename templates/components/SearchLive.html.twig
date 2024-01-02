@@ -1,0 +1,14 @@
+<div{{ attributes }}>
+    <input type="search" data-model="on(change)|query" />
+    <ul>
+    {{ form(form, {
+        attr: {
+            'data-action':'live#action',
+            'data-action-name':'prevent|save'
+        }
+    }) }}
+    {% for category in this.getcategories() %}
+        <li>{{ category.name}}</li>
+    {% endfor %}
+    </ul>
+</div>

@@ -34,7 +34,8 @@ class CategoryRepository extends ServiceEntityRepository
         if ($search!== null) { 
             
             $queryBuilder->andWhere('c.name LIKE :search')
-            ->setParameter('search', '%' . $search . '%');
+            ->setParameter('search', '%' . $search . '%')
+            ->orderBy('c.createdAt', 'DESC');
 
             return $queryBuilder;
         }
