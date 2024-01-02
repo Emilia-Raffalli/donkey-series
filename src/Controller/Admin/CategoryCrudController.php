@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Category;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -26,7 +27,16 @@ class CategoryCrudController extends AbstractCrudController
         // ];
 
         yield Field::new('name');
-        yield Field::new('slug');
+        yield Field::new('slug')
+            ->hideWhenCreating(); // voir explications?
     }
     // */
+
+
+    public function configureFilters(Filters $filters):Filters // ajout de filtres
+    {
+        return $filters->add('name')
+                        ->add('slug');
+    }
+
 }

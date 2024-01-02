@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Program;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,6 +30,26 @@ class ProgramRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+
+    public function getListQuery(?string $search): QueryBuilder
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        if (!$search) {
+            return $queryBuilder;
+        }
+
+        if ($search!== null) { 
+            
+            $queryBuilder->andWhere('p.title LIKE :search')
+            ->setParameter('search', '%' . $search . '%');
+
+            return $queryBuilder;
+        }
+       
+    }
+
 
 //    /**
 //     * @return Program[] Returns an array of Program objects
