@@ -25,6 +25,11 @@
             <twig:Navbar />
     </header>
     <body>
-        {% block body %}{% endblock %}
+        {% block body %}
+        {% endblock %}
     </body>
+    <footer>
+    {# {% include 'Footer.html.twig' %} Inclure le footer #}
+      <twig:Footer />
+    </footer>
 </html>

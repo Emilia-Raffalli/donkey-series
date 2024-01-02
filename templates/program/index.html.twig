@@ -58,11 +58,21 @@
 
 
 {# display pagination navigation #}
- <div class="navigation">
+<div class="navigation">
         {{ knp_pagination_render(programs) }}
 </div>
 
+{# CREATION D'UN ACCORDEON FAQ #}
+{% for i in 1..5 %}
 
+    <div data-controller='faq'>
+        <h2 data-action='click->faq#toggle' style="cursor:pointer;"> Titre de la question {{ i }} </h2>
+        <div data-faq-target='answer' style='display:none;'>
+            lorem ipsum
+        </div>
+    </div>
+
+{% endfor %}
 
 
 
